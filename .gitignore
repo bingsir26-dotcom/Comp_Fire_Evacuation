@@ -1,0 +1,8 @@
+.env
+__pycache__/
+output/
+*.pyc
+*.docx
+Thumbs.db
+.DS_Store
+fire_web/outputs/

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="慧焰導行">
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="icon" href="/static/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+    <title>🔥 慧焰導行 – 室內火災智慧逃生</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- 頂部狀態列 -->
+    <header id="top-bar">
+        <span id="title">🔥 慧焰導行</span>
+        <span id="connection-status" class="status-disconnected">● 離線</span>
+    </header>
+
+    <!-- 警報橫幅（預設隱藏，逃生失敗時顯示） -->
+    <div id="alert-banner" style="display:none;"></div>
+
+    <!-- 求救通知訊息（預設隱藏） -->
+    <div id="sos-message" style="display:none;"></div>
+
+    <!-- 主畫面：火焰燈區 -->
+    <section id="flame-section">
+        <h2 class="section-title">即時火焰狀態</h2>
+        <div id="flame-grid">
+            <!-- 5 個火焰燈由 JS 動態生成 -->
+        </div>
+    </section>
+
+    <!-- 熱力圖預覽 -->
+    <section id="heatmap-section">
+        <h2 class="section-title">📊 即時熱力圖 (20×20)</h2>
+        <div id="heatmap-container">
+            <canvas id="heatmap-canvas" width="300" height="300"></canvas>
+            <div id="heatmap-legend">
+                <span class="legend-item"><span class="legend-color" style="background:#ff0000"></span>高危險</span>
+                <span class="legend-item"><span class="legend-color" style="background:#ffaa00"></span>中危險</span>
+                <span class="legend-item"><span class="legend-color" style="background:#ffff00"></span>低危險</span>
+                <span class="legend-item"><span class="legend-color" style="background:#00cc00"></span>安全</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 逃生路線圖 -->
+    <section id="escape-section">
+        <h2 class="section-title">🚪 逃生路線圖</h2>
+        <div id="escape-image-container">
+            <img id="escape-image" src="" alt="逃生路線圖（點擊生成）" style="display:none;">
+            <div id="escape-placeholder" class="placeholder-box">
+                <span>點擊下方按鈕生成逃生路線</span>
+            </div>
+        </div>
+        <div id="escape-info" style="display:none;">
+            <span id="escape-steps"></span>
+        </div>
+    </section>
+
+    <!-- 按鈕區 -->
+    <section id="action-section">
+        <button id="btn-escape-python" class="btn btn-primary" onclick="generateEscape()">
+            🧭 生成逃生路線 (Python)
+        </button>
+        <button id="btn-escape-ai" class="btn btn-accent" onclick="generateAIEscape()">
+            🤖 AI 生成逃生路線
+        </button>
+    </section>
+
+    <!-- 底部狀態資訊 -->
+    <footer id="bottom-bar">
+        <span id="serial-status">Arduino: 等待連線</span>
+        <span id="sensor-values">感測器: --</span>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "name": "慧焰導行 – 室內火災智慧逃生",
+    "short_name": "慧焰導行",
+    "description": "即時火焰監控與 AI 逃生路線規劃系統",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#0a0a0a",
+    "background_color": "#0a0a0a",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/static/icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "lang": "zh-TW",
+    "categories": ["utilities", "navigation"]
+}

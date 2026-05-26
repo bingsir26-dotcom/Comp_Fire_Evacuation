@@ -1,0 +1,40 @@
+Use the given classroom floor plan as the base image.
+Do not redraw or replace the classroom. Keep all walls, doors, windows, desks and layout exactly the same, only add visual overlays on top of this floor plan.
+
+Now, using the separate 20×20 fire heatmap image as the danger distribution, project this heatmap onto the classroom floor plan:
+
+Treat the heatmap as the temperature distribution of the entire classroom area.
+
+Map the hotter cells (red / orange in the 20×20 heatmap) to the corresponding positions inside the classroom, and overlay them as a semi‑transparent heat layer on the floor (deep red for highest danger, orange and yellow for medium, green for safe).
+
+Make sure the original desks, labels and outlines of the classroom can still be clearly seen underneath the transparent heat colors.
+
+On top of the heatmap overlay, draw an AI‑planned optimal escape path:
+
+Mark one “Start” point near the student desks area.
+
+Mark one or two “Exit” points at the classroom doors or corridor side.
+
+Draw a clear, bright path line with arrows from Start to Exit that avoids the red high‑temperature zones and passes through safer green/yellow regions.
+
+The path should look like a recommended evacuation route, with arrows indicating direction.
+
+Add small text labels on the floor plan in clear English:
+
+“High‑risk hot zone” over the red areas.
+
+“Safer zone” over green/yellow areas.
+
+“Start” at the starting point.
+
+“Exit” at each exit.
+
+“AI‑Generated Escape Route” near the path line.
+
+Very important:
+
+The final image must clearly look like the same original classroom floor plan with overlays added on top, not a new building drawing.
+
+Do not change the perspective, proportions, or structure of the classroom. Only overlay transparent heat colors and the escape path.
+
+Keep the overall style clean and technical, suitable for a research poster figure.

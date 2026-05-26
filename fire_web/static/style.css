@@ -1,0 +1,349 @@
+/* ============================================================
+   慧焰導行 – PWA 樣式 (手機優先, 深色主題)
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-card: #1a1a2e;
+    --text-primary: #e0e0e0;
+    --text-secondary: #888888;
+    --accent-green: #00cc44;
+    --accent-blue: #1155ff;
+    --accent-red: #ff4444;
+    --accent-orange: #ff8c00;
+    --accent-yellow: #ffd700;
+    --border-color: #2a2a3a;
+    --btn-primary: #1a6b3c;
+    --btn-primary-hover: #228b4a;
+    --btn-accent: #6b3a8b;
+    --btn-accent-hover: #8b4aaa;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Microsoft YaHei', 'PingFang TC', 'Noto Sans TC', -apple-system, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+}
+
+/* ============================================================
+   頂部狀態列
+   ============================================================ */
+#top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+#title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--accent-orange);
+    text-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
+}
+
+.status-connected {
+    font-size: 13px;
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.status-disconnected {
+    font-size: 13px;
+    color: var(--accent-red);
+    font-weight: 600;
+}
+
+/* ============================================================
+   區塊標題
+   ============================================================ */
+.section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 16px 16px 8px 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   火焰燈區
+   ============================================================ */
+#flame-grid {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 12px 8px 20px;
+    gap: 8px;
+    min-height: 180px;
+}
+
+.flame-light {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    max-width: 80px;
+}
+
+.flame-bar {
+    position: relative;
+    width: 36px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.flame-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 18px;
+    transition: height 0.3s ease-out, background 0.3s, box-shadow 0.3s;
+    min-height: 4px;
+}
+
+.flame-value {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--accent-yellow);
+}
+
+.flame-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   熱力圖區
+   ============================================================ */
+#heatmap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px 16px;
+    gap: 10px;
+}
+
+#heatmap-canvas {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    image-rendering: pixelated;
+}
+
+#heatmap-legend {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.legend-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+/* ============================================================
+   逃生路線圖區
+   ============================================================ */
+#escape-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    padding: 0 16px;
+}
+
+#escape-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.placeholder-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    min-height: 200px;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+#escape-info {
+    text-align: center;
+    padding: 8px 16px;
+}
+
+#escape-steps {
+    font-size: 14px;
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+/* ============================================================
+   按鈕區
+   ============================================================ */
+#action-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: inherit;
+    color: #fff;
+    -webkit-appearance: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--btn-primary);
+    box-shadow: 0 4px 12px rgba(0, 200, 60, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+}
+
+.btn-accent {
+    background: var(--btn-accent);
+    box-shadow: 0 4px 12px rgba(140, 80, 200, 0.25);
+}
+
+.btn-accent:hover:not(:disabled) {
+    background: var(--btn-accent-hover);
+}
+
+/* ============================================================
+   底部狀態列
+   ============================================================ */
+#bottom-bar {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* ============================================================
+   警報橫幅 & SOS 訊息
+   ============================================================ */
+#alert-banner {
+    display: none;
+    padding: 14px 16px;
+    margin: 0;
+    background: linear-gradient(90deg, #cc0000, #990000);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    animation: pulse-red 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-red {
+    from { background: linear-gradient(90deg, #cc0000, #990000); }
+    to   { background: linear-gradient(90deg, #ff2222, #bb0000); }
+}
+
+#sos-message {
+    display: none;
+    padding: 12px 16px;
+    margin: 0;
+    background: #2a0000;
+    border-bottom: 2px solid #cc0000;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ============================================================
+   桌面版微調
+   ============================================================ */
+@media (min-width: 768px) {
+    body {
+        max-width: 480px;
+        margin: 0 auto;
+        border-left: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+    }
+
+    #action-section {
+        flex-direction: row;
+    }
+
+    .btn {
+        flex: 1;
+    }
+
+    #flame-grid {
+        gap: 16px;
+    }
+}
