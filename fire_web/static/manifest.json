@@ -1,7 +1,7 @@
 {
-    "name": "慧焰導行 – 室內火災智慧逃生",
-    "short_name": "慧焰導行",
-    "description": "即時火焰監控與 AI 逃生路線規劃系統",
+    "name": "基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統",
+    "short_name": "基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統",
+    "description": "即時火焰監測、本地安全路徑判斷與逃生指示系統",
     "start_url": "/",
     "display": "standalone",
     "orientation": "portrait",

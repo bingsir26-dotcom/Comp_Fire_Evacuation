@@ -1,33 +1,55 @@
-// 慧焰導行 – 火焰模擬器（旋鈕控制版）
-// 5 個旋鈕 (A1-A5) 控制 5 個 LED (3,6,7,9,11) 的亮度
-// 透過 Serial (115200) 輸出數據給 Python 後端
+#include <Wire.h>
+#include <Adafruit_MotorShield.h>
 
-const int POT_PINS[] = {A1, A2, A3, A4, A5};
-const int LED_PINS[] = {3, 6, 7, 9, 11};
-const int COUNT = 5;
+Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+
+Adafruit_DCMotor *motor1 = AFMS.getMotor(1);
+Adafruit_DCMotor *motor2 = AFMS.getMotor(2);
+Adafruit_DCMotor *motor3 = AFMS.getMotor(3);
+Adafruit_DCMotor *motor4 = AFMS.getMotor(4);
 
 void setup() {
-  Serial.begin(115200);
-  for (int i = 0; i < COUNT; i++) {
-    pinMode(LED_PINS[i], OUTPUT);
+  Serial.begin(9600);
+
+  if (!AFMS.begin()) {
+    Serial.println("ERROR: Motor Shield not found.");
+
+    while (true) {
+      delay(100);
+    }
   }
+
+  Serial.println("Motor Shield OK. Start in 3 seconds.");
+
+  motor1->run(RELEASE);
+  motor2->run(RELEASE);
+  motor3->run(RELEASE);
+  motor4->run(RELEASE);
+
+  motor1->setSpeed(150);
+  motor2->setSpeed(150);
+  motor3->setSpeed(150);
+  motor4->setSpeed(150);
+
+  delay(3000);
 }
 
 void loop() {
-  for (int i = 0; i < COUNT; i++) {
-    int potVal = analogRead(POT_PINS[i]);        // 0-1023
-    int brightness = map(potVal, 0, 1023, 0, 255); // 映射到 0-255
-    brightness = constrain(brightness, 0, 255);
+  Serial.println("MOTORS ON");
 
-    analogWrite(LED_PINS[i], brightness);
+  motor1->run(FORWARD);
+  motor2->run(FORWARD);
+  motor3->run(FORWARD);
+  motor4->run(FORWARD);
 
-    // 格式對應 server.py: 燈%d: 旋鈕=%d, 亮度=%d
-    Serial.print("燈");
-    Serial.print(i + 1);
-    Serial.print(": 旋鈕=");
-    Serial.print(potVal);
-    Serial.print(", 亮度=");
-    Serial.println(brightness);
-  }
-  delay(200); // 200ms 更新一次，對應 server.py WebSocket 推送節奏
+  delay(2000);
+
+  Serial.println("MOTORS OFF");
+
+  motor1->run(RELEASE);
+  motor2->run(RELEASE);
+  motor3->run(RELEASE);
+  motor4->run(RELEASE);
+
+  delay(2000);
 }

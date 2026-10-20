@@ -6,17 +6,20 @@
     <meta name="theme-color" content="#0a0a0a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="慧焰導行">
+    <meta name="apple-mobile-web-app-title" content="基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統">
     <link rel="manifest" href="/static/manifest.json">
     <link rel="icon" href="/static/icons/icon-192.png">
     <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
-    <title>🔥 慧焰導行 – 室內火災智慧逃生</title>
+    <title>🔥 基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <!-- 頂部狀態列 -->
     <header id="top-bar">
-        <span id="title">🔥 慧焰導行</span>
+        <span id="title" aria-label="基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統">
+            <span class="title-prefix">基於生成式人工智能輔助的</span>
+            <span class="title-main">室內火災逃生最優路徑判斷與指示系統</span>
+        </span>
         <span id="connection-status" class="status-disconnected">● 離線</span>
     </header>
 
@@ -50,26 +53,44 @@
 
     <!-- 逃生路線圖 -->
     <section id="escape-section">
-        <h2 class="section-title">🚪 逃生路線圖</h2>
+        <h2 class="section-title">🚪 即時安全逃生路線</h2>
         <div id="escape-image-container">
-            <img id="escape-image" src="" alt="逃生路線圖（點擊生成）" style="display:none;">
+            <canvas id="escape-canvas" width="600" height="600" aria-label="本地即時計算的安全逃生路線" style="display:none;"></canvas>
+            <img id="escape-image" src="" alt="避難安全圖" style="display:none;">
             <div id="escape-placeholder" class="placeholder-box">
-                <span>點擊下方按鈕生成逃生路線</span>
+                <span>正在啟動本地即時安全路線分析...</span>
             </div>
         </div>
         <div id="escape-info" style="display:none;">
             <span id="escape-steps"></span>
         </div>
+
+        <!-- 生成式 AI 只負責把已驗證的安全結果轉成人類可讀指引，不參與路線決策。 -->
+        <div id="genai-guidance-card" aria-live="polite">
+            <div class="genai-heading">
+                <span>✦ 生成式 AI 輔助逃生指引</span>
+                <span id="genai-status" class="genai-status is-waiting">等待 DeepSeek 指引</span>
+            </div>
+            <p id="genai-guidance-text">安全路線正由本地 A* 演算法驗證；DeepSeek 會把已驗證結果轉成文字與共享語音。</p>
+            <p class="genai-safety-note">安全路線由本地 A* 演算法驗證；生成式 AI 只負責文字與語音輔助。</p>
+            <p id="auto-speak-note" class="genai-auto-note">首次展示請按一下啟用語音提醒；之後只在可逃生、就地避難或安全出口改變時自動以普通話播報。</p>
+            <div class="genai-actions">
+                <button id="auto-speak-toggle" type="button" class="genai-button auto-speak">🔈 啟用語音提醒</button>
+                <audio id="guidance-audio" preload="auto"></audio>
+            </div>
+        </div>
     </section>
 
-    <!-- 按鈕區 -->
-    <section id="action-section">
-        <button id="btn-escape-python" class="btn btn-primary" onclick="generateEscape()">
-            🧭 生成逃生路線 (Python)
-        </button>
-        <button id="btn-escape-ai" class="btn btn-accent" onclick="generateAIEscape()">
-            🤖 AI 生成逃生路線
-        </button>
+
+    <!-- QR Code 分享 -->
+    <section id="share-section">
+        <h2 class="section-title">📱 即時展示 QR Code</h2>
+        <div id="share-card">
+            <img id="share-qr-image" alt="連接基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統即時展示頁面的 QR Code">
+            <div id="share-details">
+                <strong>手機掃碼同步火場實時狀況</strong>
+            </div>
+        </div>
     </section>
 
     <!-- 底部狀態資訊 -->

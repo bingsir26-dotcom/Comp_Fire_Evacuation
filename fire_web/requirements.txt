@@ -7,4 +7,7 @@ scipy>=1.10.0
 Pillow>=9.0.0
 matplotlib>=3.7.0
 python-dotenv>=1.0.0
+qrcode[pil]>=7.4
+# Required for shared DeepSeek guidance audio; the legacy concept-image endpoint still uses openai.
+edge-tts>=7.0.0
 openai>=1.0.0

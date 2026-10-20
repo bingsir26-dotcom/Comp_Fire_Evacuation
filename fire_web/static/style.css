@@ -1,5 +1,5 @@
 /* ============================================================
-   慧焰導行 – PWA 樣式 (手機優先, 深色主題)
+   基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統 – PWA 樣式 (手機優先, 深色主題)
    ============================================================ */
 
 * {
@@ -20,10 +20,6 @@
     --accent-orange: #ff8c00;
     --accent-yellow: #ffd700;
     --border-color: #2a2a3a;
-    --btn-primary: #1a6b3c;
-    --btn-primary-hover: #228b4a;
-    --btn-accent: #6b3a8b;
-    --btn-accent-hover: #8b4aaa;
 }
 
 html, body {
@@ -47,29 +43,71 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
+    gap: 12px;
+    padding: 10px 16px;
     background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
 }
 
 #title {
-    font-size: 18px;
-    font-weight: bold;
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
     color: var(--accent-orange);
     text-shadow: 0 0 10px rgba(255, 140, 0, 0.3);
 }
 
-.status-connected {
+.title-prefix {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    color: #f6b349;
+}
+
+.title-main {
+    font-size: clamp(14px, 3.9vw, 18px);
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+}
+
+.status-connected,
+.status-disconnected {
+    flex: 0 0 auto;
+    white-space: nowrap;
     font-size: 13px;
-    color: var(--accent-green);
     font-weight: 600;
 }
 
+.status-connected {
+    color: var(--accent-green);
+}
+
 .status-disconnected {
-    font-size: 13px;
     color: var(--accent-red);
-    font-weight: 600;
+}
+
+@media (max-width: 360px) {
+    #top-bar {
+        gap: 8px;
+        padding-inline: 12px;
+    }
+
+    .title-prefix {
+        font-size: 10px;
+    }
+
+    .title-main {
+        font-size: 13px;
+    }
+
+    .status-connected,
+    .status-disconnected {
+        font-size: 11px;
+    }
 }
 
 /* ============================================================
@@ -190,11 +228,18 @@ html, body {
     padding: 0 16px;
 }
 
-#escape-image {
+#escape-image,
+#escape-canvas {
     width: 100%;
     max-width: 400px;
+    aspect-ratio: 1;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+    background: #08111d;
+}
+
+#escape-canvas {
+    image-rendering: auto;
 }
 
 .placeholder-box {
@@ -221,58 +266,163 @@ html, body {
     font-weight: 600;
 }
 
-/* ============================================================
-   按鈕區
-   ============================================================ */
-#action-section {
+#genai-guidance-card {
+    margin: 14px 16px 8px;
+    padding: 14px;
+    border: 1px solid rgba(247, 178, 68, 0.36);
+    border-left: 3px solid var(--accent-orange);
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.10), rgba(17, 85, 255, 0.08));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.genai-heading {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: #ffd17a;
+    font-size: 15px;
+    font-weight: 800;
 }
 
-.btn {
-    display: block;
-    width: 100%;
-    padding: 16px 20px;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
+.genai-status {
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.genai-status.is-waiting,
+.genai-status.is-generating {
+    color: #ffd166;
+}
+
+.genai-status.is-ready {
+    color: #54dc8a;
+}
+
+.genai-status.is-unavailable,
+.genai-status.is-error {
+    color: #ff8080;
+}
+
+#genai-guidance-text {
+    min-height: 3.2em;
+    margin: 10px 0 8px;
+    color: #f3f5f8;
+    font-size: 15px;
     font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    font-family: inherit;
+    line-height: 1.62;
+}
+
+.genai-safety-note {
+    margin: 0;
+    color: #aeb7c4;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.genai-auto-note {
+    margin: 7px 0 0;
+    color: #8fc6ff;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.genai-auto-note.is-enabled {
+    color: #72df9b;
+}
+
+.genai-auto-note.is-blocked {
+    color: #ffd166;
+}
+
+
+.genai-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.genai-button {
+    min-height: 34px;
+    padding: 7px 10px;
+    border: 1px solid #d98917;
+    border-radius: 7px;
+    background: #b96500;
     color: #fff;
-    -webkit-appearance: none;
-    user-select: none;
-    -webkit-user-select: none;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.btn:active {
-    transform: scale(0.97);
+.genai-button.secondary {
+    border-color: #4b6383;
+    background: #1b2d46;
 }
 
-.btn:disabled {
-    opacity: 0.5;
+.genai-button.auto-speak {
+    border-color: #23a75a;
+    background: #116a38;
+}
+
+.genai-button.auto-speak.is-enabled {
+    border-color: #68efa0;
+    background: #0e8a43;
+}
+
+.genai-button:disabled {
     cursor: not-allowed;
+    opacity: 0.48;
 }
 
-.btn-primary {
-    background: var(--btn-primary);
-    box-shadow: 0 4px 12px rgba(0, 200, 60, 0.25);
+.genai-button:not(:disabled):hover {
+    filter: brightness(1.15);
 }
 
-.btn-primary:hover:not(:disabled) {
-    background: var(--btn-primary-hover);
+/* ============================================================
+   現場分享 QR Code
+   ============================================================ */
+#share-section {
+    padding: 4px 16px 18px;
 }
 
-.btn-accent {
-    background: var(--btn-accent);
-    box-shadow: 0 4px 12px rgba(140, 80, 200, 0.25);
+#share-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #111d2b, #0c1420);
 }
 
-.btn-accent:hover:not(:disabled) {
-    background: var(--btn-accent-hover);
+#share-qr-image {
+    width: 132px;
+    height: 132px;
+    flex: 0 0 132px;
+    border-radius: 8px;
+    background: #ffffff;
+    image-rendering: pixelated;
+}
+
+#share-details {
+    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 7px;
+}
+
+#share-details strong {
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.5;
 }
 
 /* ============================================================
@@ -335,13 +485,6 @@ html, body {
         border-right: 1px solid var(--border-color);
     }
 
-    #action-section {
-        flex-direction: row;
-    }
-
-    .btn {
-        flex: 1;
-    }
 
     #flame-grid {
         gap: 16px;

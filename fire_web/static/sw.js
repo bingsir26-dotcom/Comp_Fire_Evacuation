@@ -1,9 +1,9 @@
 /**
- * 慧焰導行 – Service Worker (PWA 離線支援)
+ * 基於生成式人工智能輔助的室內火災逃生最優路徑判斷與指示系統 – Service Worker (PWA 離線支援)
  * 快取主要靜態資源，確保基本頁面可在離線時載入
  */
 
-const CACHE_NAME = 'fire-escape-v1';
+const CACHE_NAME = 'fire-escape-v9-event-navigation-speech';
 const STATIC_ASSETS = [
     '/',
     '/static/index.html',

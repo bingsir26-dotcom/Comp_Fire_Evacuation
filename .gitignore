@@ -1,8 +1,44 @@
+# Private configuration
 .env
+*.env
+!.env.example
+
+# Python runtime and generated files
 __pycache__/
+*.py[cod]
+.venv/
+venv/
 output/
-*.pyc
+fire_web/outputs/
+
+# Build and packaged artifacts
+*.zip
+*.pdf
 *.docx
+*.exe
+*.dll
+*.pyd
+build/
+dist/
+release/
+Fire_Evacuation_Demo_Package/
+submission_en/
+
+# Downloaded tools and non-core helpers
+fire_web/tools/
+fire_web/run_public.bat
+fire_web/install_*.bat
+fire_web/install_*.ps1
+fire_web/test_*.py
+
+# Documentation and presentation material
+*.md
+fire_submit/
+photo/
+/*.txt
+/*.html
+/generate_presentation_images.py
+
+# OS metadata
 Thumbs.db
 .DS_Store
-fire_web/outputs/
